@@ -1,0 +1,793 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Swaga - Perfume Cost Calculator</title>
+    <style>
+        :root {
+            --primary: #1a1a2e;
+            --secondary: #16213e;
+            --accent: #00d4ff;
+            --accent-dark: #0099cc;
+            --success: #00ff88;
+            --warning: #ffb400;
+            --danger: #ff4757;
+            --light: #f5f5f5;
+            --text: #ffffff;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: linear-gradient(135deg, #0f0f1e 0%, #1a1a2e 50%, #16213e 100%);
+            color: var(--text);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        /* Header Section */
+        .header {
+            text-align: center;
+            margin-bottom: 50px;
+            position: relative;
+            padding: 40px 20px;
+            background: rgba(255, 255, 255, 0.02);
+            border-radius: 20px;
+            border: 1px solid rgba(0, 212, 255, 0.1);
+            backdrop-filter: blur(10px);
+        }
+
+        .logo-container {
+            width: 120px;
+            height: 120px;
+            margin: 0 auto 20px;
+            border-radius: 20px;
+            overflow: hidden;
+            border: 3px solid var(--accent);
+            box-shadow: 0 0 30px rgba(0, 212, 255, 0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, rgba(0, 212, 255, 0.1), rgba(0, 153, 204, 0.1));
+        }
+
+        .logo-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .logo-placeholder {
+            font-size: 50px;
+            color: var(--accent);
+        }
+
+        h1 {
+            font-size: 3em;
+            margin: 10px 0;
+            background: linear-gradient(45deg, var(--accent), #00ff88);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-shadow: 0 0 30px rgba(0, 212, 255, 0.3);
+        }
+
+        .tagline {
+            font-size: 1.2em;
+            color: #00ff88;
+            margin-top: 10px;
+            font-style: italic;
+            letter-spacing: 2px;
+        }
+
+        /* Main Content */
+        .main-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(0, 212, 255, 0.2);
+            border-radius: 20px;
+            padding: 30px;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .card:hover {
+            border-color: var(--accent);
+            box-shadow: 0 8px 32px rgba(0, 212, 255, 0.2);
+            transform: translateY(-5px);
+        }
+
+        .card h2 {
+            color: var(--accent);
+            margin-bottom: 20px;
+            font-size: 1.5em;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        /* Input Groups */
+        .input-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: var(--accent);
+            font-weight: 600;
+            font-size: 0.9em;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 12px 15px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(0, 212, 255, 0.2);
+            border-radius: 10px;
+            color: var(--text);
+            font-size: 1em;
+            transition: all 0.3s ease;
+            font-family: 'Segoe UI', sans-serif;
+        }
+
+        input:focus, select:focus {
+            outline: none;
+            border-color: var(--accent);
+            background: rgba(0, 212, 255, 0.05);
+            box-shadow: 0 0 15px rgba(0, 212, 255, 0.2);
+        }
+
+        /* Results Display */
+        .result-box {
+            background: rgba(0, 255, 136, 0.05);
+            border: 2px solid var(--success);
+            border-radius: 15px;
+            padding: 20px;
+            margin: 15px 0;
+        }
+
+        .result-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 0;
+            border-bottom: 1px solid rgba(0, 255, 136, 0.2);
+        }
+
+        .result-row:last-child {
+            border-bottom: none;
+        }
+
+        .result-label {
+            color: #b0b0b0;
+            font-size: 0.9em;
+        }
+
+        .result-value {
+            color: var(--success);
+            font-weight: bold;
+            font-size: 1.1em;
+        }
+
+        .total-result {
+            background: linear-gradient(90deg, rgba(0, 255, 136, 0.1), rgba(0, 212, 255, 0.1));
+            border-radius: 10px;
+            padding: 15px;
+            text-align: center;
+            margin-top: 15px;
+        }
+
+        .total-price {
+            font-size: 2em;
+            color: var(--accent);
+            font-weight: bold;
+            margin: 10px 0;
+        }
+
+        /* Buttons */
+        .btn {
+            padding: 12px 25px;
+            border: none;
+            border-radius: 10px;
+            font-size: 1em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(90deg, var(--accent), var(--accent-dark));
+            color: #000;
+            width: 100%;
+            margin-top: 10px;
+        }
+
+        .btn-primary:hover {
+            box-shadow: 0 0 20px rgba(0, 212, 255, 0.5);
+            transform: scale(1.02);
+        }
+
+        .btn-secondary {
+            background: rgba(0, 212, 255, 0.1);
+            border: 2px solid var(--accent);
+            color: var(--accent);
+            width: 100%;
+            margin-top: 10px;
+        }
+
+        .btn-secondary:hover {
+            background: var(--accent);
+            color: #000;
+        }
+
+        /* Size Selector */
+        .size-tabs {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .size-tab {
+            flex: 1;
+            padding: 12px;
+            background: rgba(0, 212, 255, 0.1);
+            border: 2px solid rgba(0, 212, 255, 0.3);
+            border-radius: 10px;
+            color: var(--text);
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+
+        .size-tab.active {
+            background: var(--accent);
+            color: #000;
+            border-color: var(--accent);
+            box-shadow: 0 0 20px rgba(0, 212, 255, 0.4);
+        }
+
+        /* Summary Grid */
+        .summary-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            margin-top: 40px;
+        }
+
+        .summary-card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(0, 212, 255, 0.2);
+            border-radius: 15px;
+            padding: 20px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .summary-card:hover {
+            border-color: var(--accent);
+            box-shadow: 0 0 20px rgba(0, 212, 255, 0.2);
+        }
+
+        .summary-label {
+            color: #b0b0b0;
+            font-size: 0.85em;
+            margin-bottom: 10px;
+        }
+
+        .summary-value {
+            font-size: 1.8em;
+            color: var(--accent);
+            font-weight: bold;
+        }
+
+        /* Price Comparison */
+        .comparison-section {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .comparison-card {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 180, 0, 0.3);
+            border-radius: 15px;
+            padding: 20px;
+        }
+
+        .comparison-card.offline {
+            border-color: rgba(255, 71, 87, 0.3);
+        }
+
+        .comparison-header {
+            color: var(--warning);
+            font-weight: bold;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        .comparison-card.offline .comparison-header {
+            color: var(--danger);
+        }
+
+        /* Formula Info */
+        .formula-info {
+            background: rgba(0, 212, 255, 0.05);
+            border-left: 4px solid var(--accent);
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+            font-size: 0.9em;
+            line-height: 1.6;
+        }
+
+        .formula-label {
+            color: var(--accent);
+            font-weight: bold;
+            margin-bottom: 8px;
+        }
+
+        .formula-item {
+            padding: 5px 0;
+            color: #d0d0d0;
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .main-grid {
+                grid-template-columns: 1fr;
+            }
+
+            h1 {
+                font-size: 2em;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .summary-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .comparison-section {
+                grid-template-columns: 1fr;
+            }
+
+            .size-tabs {
+                flex-direction: column;
+            }
+        }
+
+        .section-title {
+            color: var(--accent);
+            font-size: 1.3em;
+            margin-top: 40px;
+            margin-bottom: 20px;
+            padding: 10px 0;
+            border-bottom: 2px solid rgba(0, 212, 255, 0.3);
+        }
+
+        .channel-selector {
+            display: flex;
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .channel-btn {
+            flex: 1;
+            padding: 12px;
+            background: rgba(0, 212, 255, 0.1);
+            border: 2px solid rgba(0, 212, 255, 0.3);
+            border-radius: 10px;
+            color: var(--text);
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .channel-btn.active {
+            background: var(--accent);
+            border-color: var(--accent);
+            color: #000;
+        }
+
+        .locked-input {
+            background: rgba(100, 100, 100, 0.2);
+            color: #a0a0a0;
+            cursor: not-allowed;
+        }
+
+        .locked-input:focus {
+            border-color: rgba(0, 212, 255, 0.1);
+            box-shadow: none;
+        }
+
+        .info-icon {
+            color: var(--accent);
+            margin-left: 5px;
+            cursor: help;
+            font-size: 0.8em;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <div class="logo-container" id="logoContainer">
+                <img id="logoImage" src="swaga.jpg" alt="Swaga Logo" style="width: 100%; height: 100%; object-fit: cover;">
+            </div>
+            <h1>SWAGA</h1>
+            <p class="tagline">Semerbak Wangi Surga</p>
+        </div>
+
+        <!-- Main Calculator Section -->
+        <div class="main-grid">
+            <!-- Left: Input Section -->
+            <div class="card">
+                <h2>⚙️ Pengaturan Harga Bahan</h2>
+                
+                <div class="input-group">
+                    <label>Harga Bibit Parfum (per kg) <span class="info-icon">?</span></label>
+                    <input type="number" id="hargaBibit" value="887000" step="1000">
+                    <small style="color: #888;">Default: Rp 887.000</small>
+                </div>
+
+                <div class="input-group">
+                    <label>Harga Absolute 96% (per kg) <span class="info-icon">?</span></label>
+                    <input type="number" id="hargaAbsolute" value="50000" step="1000">
+                    <small style="color: #888;">Default: Rp 50.000</small>
+                </div>
+
+                <div class="input-group">
+                    <label>Harga Fixative (per 100ml) <span class="info-icon">?</span></label>
+                    <input type="number" id="hargaFixative" value="30000" step="1000">
+                    <small style="color: #888;">Default: Rp 30.000</small>
+                </div>
+
+                <button class="btn btn-primary" onclick="hitungPerfum()">Hitung Harga</button>
+            </div>
+
+            <!-- Right: Formula Display -->
+            <div class="card">
+                <h2>📋 Formulasi Produk</h2>
+                
+                <div class="formula-info">
+                    <div class="formula-label">📦 UKURAN 30ML (TIDAK BISA DIUBAH)</div>
+                    <div class="formula-item">🧪 Bibit: 30% / 9ml</div>
+                    <div class="formula-item">💧 Fixative: 5% / 1.5ml</div>
+                    <div class="formula-item">🌸 Absolute: 65% / 19.5ml</div>
+                </div>
+
+                <div class="formula-info">
+                    <div class="formula-label">📦 UKURAN 50ML (TIDAK BISA DIUBAH)</div>
+                    <div class="formula-item">🧪 Bibit: 20% / 10ml</div>
+                    <div class="formula-item">💧 Fixative: 5% / 2.5ml</div>
+                    <div class="formula-item">🌸 Absolute: 75% / 37.5ml</div>
+                </div>
+
+                <div style="background: rgba(255, 180, 0, 0.1); border-left: 4px solid var(--warning); padding: 15px; border-radius: 8px; margin-top: 15px;">
+                    <div style="color: var(--warning); font-weight: bold; margin-bottom: 8px;">⚠️ Catatan Penting</div>
+                    <div style="font-size: 0.9em; color: #d0d0d0;">Persentase dan takaran sudah ditentukan berdasarkan best practice industri parfum. Tidak dapat diubah untuk menjaga kualitas produk.</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Size Selector & Detailed Calculation -->
+        <div class="card">
+            <h2>💰 Kalkulator Harga Per Botol</h2>
+            
+            <div class="size-tabs">
+                <button class="size-tab active" onclick="gantiUkuran(30)">30ML</button>
+                <button class="size-tab" onclick="gantiUkuran(50)">50ML</button>
+            </div>
+
+            <div id="hasilHitung" style="display: none;">
+                <div class="result-box">
+                    <div class="result-row">
+                        <span class="result-label">Biaya Bahan (Bibit)</span>
+                        <span class="result-value" id="biaiBibit">Rp 0</span>
+                    </div>
+                    <div class="result-row">
+                        <span class="result-label">Biaya Bahan (Absolute)</span>
+                        <span class="result-value" id="biayaAbsolute">Rp 0</span>
+                    </div>
+                    <div class="result-row">
+                        <span class="result-label">Biaya Bahan (Fixative)</span>
+                        <span class="result-value" id="biayaFixative">Rp 0</span>
+                    </div>
+                    <div class="result-row" style="border-bottom: 2px solid var(--success); padding: 15px 0 10px 0; font-weight: bold;">
+                        <span class="result-label">Total Biaya Bahan</span>
+                        <span class="result-value" id="totalBiaiBahan">Rp 0</span>
+                    </div>
+                </div>
+
+                <div class="result-box">
+                    <div class="result-row">
+                        <span class="result-label">Biaya HPP Kemasan & Botol</span>
+                        <span class="result-value" id="biayaPPK">Rp 5.000</span>
+                    </div>
+                    <div class="result-row" style="border-bottom: 2px solid var(--success); padding: 15px 0 10px 0; font-weight: bold;">
+                        <span class="result-label">Total HPP (Harga Pokok Penjualan)</span>
+                        <span class="result-value" id="totalHPP">Rp 0</span>
+                    </div>
+                </div>
+
+                <div class="total-result">
+                    <div style="color: #b0b0b0;">Harga Dasar Per Unit</div>
+                    <div class="total-price" id="hargaDasar">Rp 0</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Channel Selection -->
+        <div class="card">
+            <h2>🛍️ Pilih Saluran Penjualan</h2>
+            
+            <div class="channel-selector">
+                <button class="channel-btn active" onclick="gantiChannel('online')">💻 ONLINE (E-Commerce)</button>
+                <button class="channel-btn" onclick="gantiChannel('offline')">🏪 OFFLINE (Toko Fisik)</button>
+            </div>
+
+            <div class="input-group">
+                <label>Keuntungan Target (dapat diubah) <span class="info-icon">?</span></label>
+                <input type="number" id="keuntunganTarget" value="7000" step="500">
+                <small style="color: #888;" id="keterangan">Default Online: Rp 7.000</small>
+            </div>
+
+            <button class="btn btn-primary" onclick="hitungPerfum()">Perbarui Harga Jual</button>
+        </div>
+
+        <!-- Pricing & Profit Section -->
+        <div class="summary-grid" id="summaryContainer" style="display: none;">
+            <div class="summary-card">
+                <div class="summary-label">💵 HPP (Harga Pokok)</div>
+                <div class="summary-value" id="summaryHPP">Rp 0</div>
+            </div>
+            <div class="summary-card">
+                <div class="summary-label">📈 Keuntungan Per Unit</div>
+                <div class="summary-value" id="summaryKeuntungan">Rp 0</div>
+            </div>
+            <div class="summary-card">
+                <div class="summary-label">💰 Harga Jual Per Unit</div>
+                <div class="summary-value" id="summaryHargaJual">Rp 0</div>
+            </div>
+            <div class="summary-card">
+                <div class="summary-label">📊 Margin Keuntungan</div>
+                <div class="summary-value" id="summaryMargin">0%</div>
+            </div>
+        </div>
+
+        <!-- Sales Calculator -->
+        <div class="card" style="margin-top: 40px;">
+            <h2>📊 Kalkulator Penjualan & Keuntungan Kotor</h2>
+            
+            <div class="input-group">
+                <label>Jumlah Unit Terjual</label>
+                <input type="number" id="jumlahTerjual" value="10" min="1" step="1">
+            </div>
+
+            <div id="salesTotalContainer" style="display: none;">
+                <div class="result-box">
+                    <div class="result-row">
+                        <span class="result-label">Total Penjualan (Harga Jual × Unit)</span>
+                        <span class="result-value" id="totalPenjualan">Rp 0</span>
+                    </div>
+                    <div class="result-row">
+                        <span class="result-label">Total HPP (HPP × Unit)</span>
+                        <span class="result-value" id="totalHPPAllUnit">Rp 0</span>
+                    </div>
+                    <div class="result-row" style="border-bottom: 2px solid #00ff88; padding: 15px 0 10px 0; font-weight: bold;">
+                        <span class="result-label">Laba Kotor (Sebelum Operasional)</span>
+                        <span class="result-value" id="labaKotor">Rp 0</span>
+                    </div>
+                    <div class="result-row">
+                        <span class="result-label">Laba Bersih (Estimasi)</span>
+                        <span class="result-value" id="labaBersih">Rp 0</span>
+                    </div>
+                </div>
+            </div>
+
+            <button class="btn btn-primary" onclick="hitungPenjualan()">Hitung Keuntungan</button>
+        </div>
+
+        <!-- Comparison Section -->
+        <div class="section-title">⚖️ Perbandingan: Online vs Offline</div>
+        <div class="comparison-section" id="comparisonContainer" style="display: none;">
+            <!-- Online -->
+            <div class="comparison-card">
+                <div class="comparison-header">💻 E-COMMERCE / ONLINE</div>
+                <div class="result-row">
+                    <span class="result-label">Keuntungan per Unit</span>
+                    <span class="result-value">Rp 7.000</span>
+                </div>
+                <div class="result-row">
+                    <span class="result-label">Harga Jual</span>
+                    <span class="result-value" id="hargaOnline">Rp 0</span>
+                </div>
+                <div class="result-row">
+                    <span class="result-label">Laba Kotor (10 unit)</span>
+                    <span class="result-value" id="labaOnline">Rp 0</span>
+                </div>
+            </div>
+
+            <!-- Offline -->
+            <div class="comparison-card offline">
+                <div class="comparison-header">🏪 TOKO FISIK / OFFLINE</div>
+                <div class="result-row">
+                    <span class="result-label">Keuntungan per Unit</span>
+                    <span class="result-value">Rp 11.000</span>
+                </div>
+                <div class="result-row">
+                    <span class="result-label">Harga Jual</span>
+                    <span class="result-value" id="hargaOffline">Rp 0</span>
+                </div>
+                <div class="result-row">
+                    <span class="result-label">Laba Kotor (10 unit)</span>
+                    <span class="result-value" id="labaOffline">Rp 0</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentSize = 30;
+        let currentChannel = 'online';
+        const HPP_KEMASAN = 5000;
+        const KEUNTUNGAN_OFFLINE = 11000;
+
+        // Formula tetap (tidak bisa diubah)
+        const formulas = {
+            30: {
+                bibit: { persen: 30, ml: 9 },
+                absolute: { persen: 65, ml: 19.5 },
+                fixative: { persen: 5, ml: 1.5 }
+            },
+            50: {
+                bibit: { persen: 20, ml: 10 },
+                absolute: { persen: 75, ml: 37.5 },
+                fixative: { persen: 5, ml: 2.5 }
+            }
+        };
+
+        // Logo sudah ditampilkan langsung dari file swaga.jpg
+
+        function gantiUkuran(size) {
+            currentSize = size;
+            document.querySelectorAll('.size-tab').forEach(tab => tab.classList.remove('active'));
+            event.target.classList.add('active');
+            hitungPerfum();
+        }
+
+        function gantiChannel(channel) {
+            currentChannel = channel;
+            document.querySelectorAll('.channel-btn').forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+            
+            const keterangan = document.getElementById('keterangan');
+            const keuntunganInput = document.getElementById('keuntunganTarget');
+            
+            if (channel === 'online') {
+                keterangan.textContent = 'Default Online: Rp 7.000';
+                keuntunganInput.value = 7000;
+            } else {
+                keterangan.textContent = 'Default Offline: Rp 11.000';
+                keuntunganInput.value = 11000;
+            }
+            
+            hitungPerfum();
+        }
+
+        function formatRupiah(num) {
+            return 'Rp ' + Math.round(num).toLocaleString('id-ID');
+        }
+
+        function parseRupiah(str) {
+            return parseInt(str.replace(/\D/g, '')) || 0;
+        }
+
+        function hitungPerfum() {
+            const hargaBibit = parseFloat(document.getElementById('hargaBibit').value) || 887000;
+            const hargaAbsolute = parseFloat(document.getElementById('hargaAbsolute').value) || 50000;
+            const hargaFixative = parseFloat(document.getElementById('hargaFixative').value) || 30000;
+
+            const formula = formulas[currentSize];
+            
+            // Hitung biaya per bahan (dalam gram/ml)
+            const biayaBibit = (formula.bibit.ml / 1000) * hargaBibit;
+            const biayaAbsolute = (formula.absolute.ml / 1000) * hargaAbsolute;
+            const biayaFixative = (formula.fixative.ml / 100) * hargaFixative;
+
+            const totalBiaiBahan = biayaBibit + biayaAbsolute + biayaFixative;
+            const totalHPP = totalBiaiBahan + HPP_KEMASAN;
+
+            // Display results
+            document.getElementById('biaiBibit').textContent = formatRupiah(biayaBibit);
+            document.getElementById('biayaAbsolute').textContent = formatRupiah(biayaAbsolute);
+            document.getElementById('biayaFixative').textContent = formatRupiah(biayaFixative);
+            document.getElementById('totalBiaiBahan').textContent = formatRupiah(totalBiaiBahan);
+            document.getElementById('biayaPPK').textContent = formatRupiah(HPP_KEMASAN);
+            document.getElementById('totalHPP').textContent = formatRupiah(totalHPP);
+            document.getElementById('hargaDasar').textContent = formatRupiah(totalHPP);
+
+            document.getElementById('hasilHitung').style.display = 'block';
+
+            // Harga jual berdasarkan channel
+            const keuntunganTarget = parseFloat(document.getElementById('keuntunganTarget').value) || (currentChannel === 'online' ? 7000 : 11000);
+            const hargaJual = totalHPP + keuntunganTarget;
+
+            // Display summary
+            document.getElementById('summaryHPP').textContent = formatRupiah(totalHPP);
+            document.getElementById('summaryKeuntungan').textContent = formatRupiah(keuntunganTarget);
+            document.getElementById('summaryHargaJual').textContent = formatRupiah(hargaJual);
+            const margin = ((keuntunganTarget / totalHPP) * 100).toFixed(1);
+            document.getElementById('summaryMargin').textContent = margin + '%';
+
+            document.getElementById('summaryContainer').style.display = 'grid';
+
+            // Comparison section
+            const hargaOnline = totalHPP + 7000;
+            const hargaOffline = totalHPP + KEUNTUNGAN_OFFLINE;
+            
+            document.getElementById('hargaOnline').textContent = formatRupiah(hargaOnline);
+            document.getElementById('hargaOffline').textContent = formatRupiah(hargaOffline);
+            document.getElementById('comparisonContainer').style.display = 'grid';
+
+            return { totalHPP, hargaJual, hargaOnline, hargaOffline };
+        }
+
+        function hitungPenjualan() {
+            const jumlahTerjual = parseInt(document.getElementById('jumlahTerjual').value) || 10;
+            const calculation = hitungPerfum();
+            
+            const totalHPP = calculation.totalHPP;
+            const hargaJual = calculation.hargaJual;
+
+            const totalPenjualan = hargaJual * jumlahTerjual;
+            const totalHPPAllUnit = totalHPP * jumlahTerjual;
+            const labaKotor = totalPenjualan - totalHPPAllUnit;
+            const labaBersih = labaKotor * 0.8; // Estimasi 20% untuk operasional
+
+            document.getElementById('totalPenjualan').textContent = formatRupiah(totalPenjualan);
+            document.getElementById('totalHPPAllUnit').textContent = formatRupiah(totalHPPAllUnit);
+            document.getElementById('labaKotor').textContent = formatRupiah(labaKotor);
+            document.getElementById('labaBersih').textContent = formatRupiah(labaBersih);
+
+            // Comparison penjualan
+            const totalOnline = calculation.hargaOnline * jumlahTerjual;
+            const totalOffline = calculation.hargaOffline * jumlahTerjual;
+            const labaOnline = (totalOnline - totalHPPAllUnit);
+            const labaOffline = (totalOffline - totalHPPAllUnit);
+
+            document.getElementById('labaOnline').textContent = formatRupiah(labaOnline);
+            document.getElementById('labaOffline').textContent = formatRupiah(labaOffline);
+
+            document.getElementById('salesTotalContainer').style.display = 'block';
+        }
+
+        // Initial calculation
+        hitungPerfum();
+    </script>
+</body>
+</html>
