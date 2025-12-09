@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <title>CV & Portofolio Sopir Pribadi - Ahmad Yusuf</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      font-family: 'Segoe UI', Arial, sans-serif;
+      background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+      color: #111827;
+      line-height: 1.6;
+    }
+    .container {
+      max-width: 1000px;
+      margin: 30px auto;
+      background: #ffffff;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.12);
+      border-radius: 12px;
+      overflow: hidden;
+    }
+    header {
+      background: linear-gradient(135deg, #1d4ed8, #2563eb);
+      color: #ffffff;
+      padding: 32px;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: flex-start;
+      gap: 28px;
+      justify-content: space-between;
+    }
+    .header-left {
+      display: flex;
+      gap: 20px;
+      align-items: flex-start;
+      flex: 1;
+      min-width: 250px;
+    }
+    .profile-photo {
+      width: 130px;
+      height: 160px;
+      border-radius: 10px;
+      object-fit: cover;
+      border: 4px solid rgba(255,255,255,0.3);
+      box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+      flex-shrink: 0;
+    }
+    .header-info {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .header-info h1 {
+      font-size: 32px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      margin: 0;
+    }
+    .header-info .subtitle {
+      font-size: 18px;
+      font-weight: 600;
+      color: #e0f2fe;
+    }
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(255,255,255,0.2);
+      padding: 6px 12px;
+      border-radius: 999px;
+      font-size: 13px;
+      font-weight: 500;
+      width: fit-content;
+      margin-top: 4px;
+      border: 1px solid rgba(255,255,255,0.3);
+    }
+    .contact {
+      text-align: right;
+      font-size: 13px;
+      min-width: 280px;
+      background: rgba(0,0,0,0.1);
+      padding: 16px;
+      border-radius: 8px;
+      backdrop-filter: blur(10px);
+    }
+    .contact p {
+      margin: 6px 0;
+      font-size: 13px;
+      line-height: 1.4;
+    }
+    .contact strong {
+      color: #e0f2fe;
+      display: block;
+      font-size: 12px;
+      margin-bottom: 2px;
+    }
+    .contact a {
+      color: #fbbf24;
+      text-decoration: none;
+      font-weight: 600;
+      transition: color 0.3s;
+    }
+    .contact a:hover {
+      color: #fcd34d;
+      text-decoration: underline;
+    }
+    .btn-whatsapp {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: linear-gradient(135deg, #25d366, #20ba58);
+      color: white;
+      padding: 10px 18px;
+      border-radius: 8px;
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 14px;
+      margin-top: 10px;
+      transition: all 0.3s;
+      border: none;
+      cursor: pointer;
+      box-shadow: 0 4px 12px rgba(37, 211, 102, 0.3);
+    }
+    .btn-whatsapp:hover {
+      background: linear-gradient(135deg, #20ba58, #1a9746);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 16px rgba(37, 211, 102, 0.4);
+    }
+    .btn-whatsapp:active {
+      transform: translateY(0);
+    }
+    main {
+      padding: 32px;
+    }
+    h2 {
+      font-size: 20px;
+      margin-top: 28px;
+      margin-bottom: 12px;
+      color: #1d4ed8;
+      border-bottom: 3px solid #dbeafe;
+      padding-bottom: 6px;
+      font-weight: 700;
+    }
+    h2:first-child {
+      margin-top: 0;
+    }
+    .section {
+      margin-top: 16px;
+    }
+    .section p {
+      margin: 8px 0;
+      line-height: 1.7;
+      font-size: 14px;
+      color: #374151;
+      text-align: justify;
+    }
+    ul {
+      padding-left: 20px;
+      margin: 8px 0;
+      font-size: 14px;
+    }
+    li {
+      margin-bottom: 6px;
+      line-height: 1.6;
+      color: #374151;
+    }
+    .two-col {
+      display: grid;
+      grid-template-columns: 1.4fr 1fr;
+      gap: 32px;
+    }
+    .pill {
+      display: inline-block;
+      background: linear-gradient(135deg, #eff6ff, #dbeafe);
+      color: #1d4ed8;
+      padding: 6px 12px;
+      border-radius: 999px;
+      font-size: 13px;
+      font-weight: 500;
+      margin: 4px 6px 4px 0;
+      border: 1px solid #bfdbfe;
+      transition: all 0.3s;
+    }
+    .pill:hover {
+      background: linear-gradient(135deg, #dbeafe, #bfdbfe);
+      transform: translateY(-2px);
+    }
+    .experience-item {
+      margin-bottom: 18px;
+      padding: 12px;
+      background: #f9fafb;
+      border-left: 3px solid #2563eb;
+      border-radius: 4px;
+    }
+    .experience-title {
+      font-weight: 700;
+      font-size: 15px;
+      color: #1f2933;
+      margin-bottom: 2px;
+    }
+    .experience-meta {
+      font-size: 12px;
+      color: #6b7280;
+      margin-bottom: 6px;
+      font-style: italic;
+    }
+    .experience-item ul {
+      margin: 6px 0 0 0;
+      padding-left: 18px;
+    }
+    .experience-item li {
+      font-size: 13px;
+      margin-bottom: 4px;
+    }
+    footer {
+      background: linear-gradient(135deg, #f3f4f6, #e5e7eb);
+      padding: 16px 32px;
+      font-size: 12px;
+      color: #6b7280;
+      text-align: center;
+      border-top: 1px solid #d1d5db;
+    }
+    @media (max-width: 768px) {
+      header {
+        flex-direction: column;
+        text-align: center;
+        align-items: center;
+        padding: 24px;
+      }
+      .header-left {
+        flex-direction: column;
+        align-items: center;
+        width: 100%;
+      }
+      .contact {
+        text-align: center;
+        width: 100%;
+        min-width: auto;
+      }
+      main {
+        padding: 20px;
+      }
+      .two-col {
+        grid-template-columns: 1fr;
+        gap: 24px;
+      }
+      h1 {
+        font-size: 24px;
+      }
+      .subtitle {
+        font-size: 16px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <div class="header-left">
+        <img src="fotocvyusuf.jpeg" alt="Foto Ahmad Yusuf" class="profile-photo" />
+        <div class="header-info">
+          <h1>AHMAD YUSUF</h1>
+          <p class="subtitle">Supir Pribadi & Pengemudi Profesional</p>
+          <span class="badge">✓ Siap Bekerja Full-Time</span>
+          <span class="badge">✓ Bersedia Tugas di Luar Kota</span>
+        </div>
+      </div>
+      <div class="contact">
+        <p><strong>📱 WHATSAPP</strong>
+           <a href="https://wa.me/6281313667048">0813-1366-7048</a></p>
+        <p><strong>📧 EMAIL</strong>
+           Ahmadyusufaji03@gmail.com</p>
+        <p><strong>📍 DOMISILI SEKARANG</strong>
+           Purwomartani, Kalasan, Sleman, DIY</p>
+        <p><strong>📍 ASAL</strong>
+           Berahan Wetan, Wedung, Demak, Jateng</p>
+        <p><strong>🎂 TEMPAT, TGL LAHIR</strong>
+           Demak, 17 Juli 2004</p>
+        <a href="https://wa.me/6281313667048" class="btn-whatsapp">💬 Hubungi via WhatsApp</a>
+      </div>
+    </header>
+
+    <main>
+      <div class="two-col">
+        <!-- KOLOM KIRI -->
+        <div>
+          <section class="section">
+            <h2>PROFIL SINGKAT</h2>
+            <p>
+              Saya adalah supir pribadi yang tenang, disiplin, dan bertanggung jawab dengan pengalaman mengemudi di lingkungan pesantren dan keluarga selama beberapa tahun. Berpengalaman dalam berbagai kondisi perjalanan dan siap memberikan layanan terbaik kepada majikan.
+            </p>
+            <p>
+              Terbiasa membawa kendaraan transmisi matic maupun manual, memegang SIM A aktif, dan sangat disiplin dalam merawat kendaraan agar selalu bersih, nyaman, dan siap pakai setiap saat. Mampu menjaga kepercayaan dengan menjaga kerahasiaan dan sikap profesional.
+            </p>
+            <p>
+              Siap bekerja full-time, menyesuaikan diri dengan kebutuhan majikan, dan terus belajar untuk memberikan pelayanan yang aman, sopan, dan profesional setiap hari.
+            </p>
+          </section>
+
+          <section class="section">
+            <h2>PENGALAMAN KERJA</h2>
+
+            <div class="experience-item">
+              <div class="experience-title">Supir Pribadi</div>
+              <div class="experience-meta">Keluarga (Demak & sekitarnya) | ± 7 bulan</div>
+              <ul>
+                <li>Mengantar dan menjemput majikan serta keluarga dengan aman, nyaman, dan tepat waktu sesuai jadwal.</li>
+                <li>Menjaga kebersihan interior dan eksterior mobil setiap hari sebelum dan sesudah digunakan.</li>
+                <li>Melakukan pengecekan rutin oli, air radiator, tekanan ban, dan kelistrikan kendaraan sederhana.</li>
+                <li>Mampu menangani kendaraan dengan matic maupun manual dengan lancar dan aman.</li>
+              </ul>
+            </div>
+
+            <div class="experience-item">
+              <div class="experience-title">Abdi Sopir Kyai</div>
+              <div class="experience-meta">Pondok Pesantren Al-IBROHIMI, Gresik | ± 4 tahun</div>
+              <ul>
+                <li>Mendampingi sopir profesional dan membantu kesiapan kendaraan untuk kegiatan kyai dan pondok pesantren.</li>
+                <li>Membantu perawatan berkala kendaraan dan memastikan siap untuk perjalanan jauh dan perjalanan dakwah.</li>
+                <li>Terbiasa mengatur jadwal keberangkatan, persiapan logistik, dan kebutuhan perjalanan berbagai kegiatan pondok.</li>
+                <li>Belajar langsung teknik mengemudi aman dari sopir berpengalaman dan mengenal berbagai tipe kendaraan.</li>
+              </ul>
+            </div>
+
+            <div class="experience-item">
+              <div class="experience-title">Abdi Kyai</div>
+              <div class="experience-meta">Pondok Pesantren (Kajen) | ± 1 tahun</div>
+              <ul>
+                <li>Mendampingi kegiatan harian kyai dan siap membantu kebutuhan transportasi sehari-hari.</li>
+                <li>Menjaga sikap sopan, menjaga kerahasiaan, dan memegang teguh amanah yang diberikan majikan.</li>
+                <li>Terlatih dalam disiplin dan ketaatan serta memahami pentingnya loyalitas dalam bekerja.</li>
+              </ul>
+            </div>
+          </section>
+        </div>
+
+        <!-- KOLOM KANAN -->
+        <div>
+          <section class="section">
+            <h2>PENDIDIKAN & PESANTREN</h2>
+            <p><strong>Madrasah Tsanawiyah (MTS)</strong><br />
+               Al-IBROHIMI, Gresik<br />
+               <em>2016 – 2019</em></p>
+            <p><strong>Madrasah Aliyah (MA)</strong><br />
+               Al-IBROHIMI, Gresik – Jurusan IPS<br />
+               <em>2019 – 2022</em></p>
+            <p><strong>Mukim Pondok Pesantren</strong><br />
+               Al-IBROHIMI, Gresik<br />
+               <em>2019 – 2023</em></p>
+            <p><strong>Mukim Pondok Pesantren</strong><br />
+               Pati Bagja Salimna, Pati<br />
+               <em>2023 – 2025</em></p>
+          </section>
+
+          <section class="section">
+            <h2>KEMAMPUAN UTAMA</h2>
+            <p>
+              <span class="pill">🚗 Mengemudi Matic & Manual</span>
+              <span class="pill">📋 SIM A Aktif</span>
+              <span class="pill">🧹 Perawatan & Kebersihan Kendaraan</span>
+              <span class="pill">⏰ Disiplin & Tepat Waktu</span>
+              <span class="pill">💼 Siap Kerja Full-Time</span>
+              <span class="pill">🤐 Menjaga Kerahasiaan</span>
+              <span class="pill">📱 Komunikasi Baik</span>
+              <span class="pill">🧠 Siap Belajar & Berkembang</span>
+            </p>
+          </section>
+
+          <section class="section">
+            <h2>SERTIFIKAT & DOKUMEN</h2>
+            <p>
+              <span class="pill">✓ SIM A Aktif</span>
+              <span class="pill">✓ KTP Demak</span>
+              <span class="pill">✓ NPWP</span>
+              <span class="pill">✓ Ijazah MA</span>
+              <span class="pill">✓ Surat Pengalaman</span>
+            </p>
+          </section>
+
+          <section class="section">
+            <h2>CATATAN & HARAPAN</h2>
+            <p>
+              Siap ditempatkan sebagai <strong>supir pribadi</strong>, supir keluarga, atau pengemudi dengan tugas lain yang berhubungan dengan operasional kendaraan dan perawatannya.
+            </p>
+            <p>
+              Bersedia mengikuti <strong>masa percobaan</strong>, menyesuaikan diri dengan aturan keluarga/perusahaan, serta selalu berusaha memberikan <strong>pelayanan terbaik</strong> dan memuaskan kepada majikan.
+            </p>
+            <p style="margin-top: 16px; padding-top: 16px; border-top: 1px solid #e5e7eb; color: #1d4ed8; font-weight: 600;">
+              Terima kasih telah meluangkan waktu untuk membaca CV ini. 🙏
+            </p>
+          </section>
+        </div>
+      </div>
+    </main>
+
+    <footer>
+      <p>CV & Portofolio Supir Pribadi – <strong>Ahmad Yusuf</strong> | Hubungi via <strong>WhatsApp 0813-1366-7048</strong> atau <strong>Email Ahmadyusufaji03@gmail.com</strong> untuk informasi lebih lanjut.</p>
+      <p style="margin-top: 4px;">Terakhir diperbarui: 9 Desember 2025</p>
+    </footer>
+  </div>
+</body>
+</html>
