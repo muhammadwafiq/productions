@@ -1,0 +1,1107 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jogja Budget Planner - Investasi Pendidikan</title>
+    <style>
+        :root {
+            --primary: #1a1a2e;
+            --secondary: #16213e;
+            --accent: #00d4ff;
+            --accent-dark: #0099cc;
+            --success: #00ff88;
+            --warning: #ffb400;
+            --danger: #ff4757;
+            --light: #f5f5f5;
+            --text: #ffffff;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: linear-gradient(135deg, #0f0f1e 0%, #1a1a2e 50%, #16213e 100%);
+            color: var(--text);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        /* Header Section */
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding: 40px 20px;
+            background: rgba(255, 255, 255, 0.02);
+            border-radius: 20px;
+            border: 1px solid rgba(0, 212, 255, 0.1);
+            backdrop-filter: blur(10px);
+        }
+
+        h1 {
+            font-size: 2.5em;
+            margin: 10px 0;
+            background: linear-gradient(45deg, var(--accent), #00ff88);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .tagline {
+            font-size: 1.1em;
+            color: #00ff88;
+            margin-top: 15px;
+            font-style: italic;
+            letter-spacing: 1px;
+        }
+
+        /* Philosophy Section */
+        .philosophy {
+            background: linear-gradient(135deg, rgba(0, 212, 255, 0.1), rgba(0, 255, 136, 0.05));
+            border: 2px solid rgba(0, 212, 255, 0.3);
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 40px;
+            text-align: center;
+        }
+
+        .philosophy-text {
+            font-size: 1.2em;
+            color: #00ff88;
+            font-weight: 600;
+            margin-bottom: 15px;
+            line-height: 1.6;
+        }
+
+        .why-button {
+            background: rgba(0, 212, 255, 0.1);
+            border: 2px solid var(--accent);
+            color: var(--accent);
+            padding: 10px 25px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            margin-top: 10px;
+        }
+
+        .why-button:hover {
+            background: var(--accent);
+            color: #000;
+            box-shadow: 0 0 20px rgba(0, 212, 255, 0.5);
+        }
+
+        .reason-box {
+            display: none;
+            background: rgba(0, 255, 136, 0.05);
+            border: 2px solid var(--success);
+            border-radius: 10px;
+            padding: 20px;
+            margin-top: 15px;
+            animation: slideDown 0.3s ease;
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Main Grid */
+        .main-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(0, 212, 255, 0.2);
+            border-radius: 20px;
+            padding: 30px;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .card:hover {
+            border-color: var(--accent);
+            box-shadow: 0 8px 32px rgba(0, 212, 255, 0.2);
+            transform: translateY(-5px);
+        }
+
+        .card h2 {
+            color: var(--accent);
+            margin-bottom: 20px;
+            font-size: 1.5em;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        /* Input Groups */
+        .input-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: var(--accent);
+            font-weight: 600;
+            font-size: 0.9em;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 12px 15px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(0, 212, 255, 0.2);
+            border-radius: 10px;
+            color: var(--text);
+            font-size: 1em;
+            transition: all 0.3s ease;
+            font-family: 'Segoe UI', sans-serif;
+        }
+
+        input:focus, select:focus {
+            outline: none;
+            border-color: var(--accent);
+            background: rgba(0, 212, 255, 0.05);
+            box-shadow: 0 0 15px rgba(0, 212, 255, 0.2);
+        }
+
+        .locked-info {
+            background: rgba(100, 100, 100, 0.1);
+            border-left: 4px solid var(--warning);
+            padding: 12px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            font-size: 0.9em;
+            color: #d0d0d0;
+        }
+
+        /* Results Display */
+        .result-box {
+            background: rgba(0, 255, 136, 0.05);
+            border: 2px solid var(--success);
+            border-radius: 15px;
+            padding: 20px;
+            margin: 15px 0;
+        }
+
+        .result-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 0;
+            border-bottom: 1px solid rgba(0, 255, 136, 0.2);
+        }
+
+        .result-row:last-child {
+            border-bottom: none;
+        }
+
+        .result-label {
+            color: #b0b0b0;
+            font-size: 0.9em;
+        }
+
+        .result-value {
+            color: var(--success);
+            font-weight: bold;
+            font-size: 1.1em;
+        }
+
+        .total-result {
+            background: linear-gradient(90deg, rgba(0, 255, 136, 0.1), rgba(0, 212, 255, 0.1));
+            border-radius: 10px;
+            padding: 15px;
+            text-align: center;
+            margin-top: 15px;
+        }
+
+        .total-price {
+            font-size: 2em;
+            color: var(--accent);
+            font-weight: bold;
+            margin: 10px 0;
+        }
+
+        /* Buttons */
+        .btn {
+            padding: 12px 25px;
+            border: none;
+            border-radius: 10px;
+            font-size: 1em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(90deg, var(--accent), var(--accent-dark));
+            color: #000;
+            width: 100%;
+            margin-top: 10px;
+        }
+
+        .btn-primary:hover {
+            box-shadow: 0 0 20px rgba(0, 212, 255, 0.5);
+            transform: scale(1.02);
+        }
+
+        /* Summary Grid */
+        .summary-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-top: 40px;
+        }
+
+        .summary-card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(0, 212, 255, 0.2);
+            border-radius: 15px;
+            padding: 20px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .summary-card:hover {
+            border-color: var(--accent);
+            box-shadow: 0 0 20px rgba(0, 212, 255, 0.2);
+        }
+
+        .summary-label {
+            color: #b0b0b0;
+            font-size: 0.85em;
+            margin-bottom: 10px;
+        }
+
+        .summary-value {
+            font-size: 1.8em;
+            color: var(--accent);
+            font-weight: bold;
+        }
+
+        /* Section Title */
+        .section-title {
+            color: var(--accent);
+            font-size: 1.3em;
+            margin-top: 40px;
+            margin-bottom: 20px;
+            padding: 10px 0;
+            border-bottom: 2px solid rgba(0, 212, 255, 0.3);
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .main-grid {
+                grid-template-columns: 1fr;
+            }
+
+            h1 {
+                font-size: 2em;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .summary-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .warning-text {
+            color: var(--warning);
+            font-size: 0.85em;
+            margin-top: 5px;
+        }
+
+        /* Budget Sufficiency Section */
+        .sufficiency-card {
+            background: linear-gradient(135deg, rgba(0, 212, 255, 0.1), rgba(0, 255, 136, 0.05));
+            border: 2px solid rgba(0, 212, 255, 0.3);
+            border-radius: 15px;
+            padding: 30px;
+            margin-top: 40px;
+        }
+
+        .budget-input-group {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        .period-selector {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .period-btn {
+            flex: 1;
+            padding: 12px;
+            background: rgba(0, 212, 255, 0.1);
+            border: 2px solid rgba(0, 212, 255, 0.3);
+            border-radius: 10px;
+            color: var(--text);
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+
+        .period-btn.active {
+            background: var(--accent);
+            border-color: var(--accent);
+            color: #000;
+            box-shadow: 0 0 20px rgba(0, 212, 255, 0.4);
+        }
+
+        /* Progress Bar */
+        .progress-container {
+            margin: 30px 0;
+        }
+
+        .progress-label {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            color: #b0b0b0;
+            font-size: 0.9em;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 30px;
+            background: rgba(0, 212, 255, 0.1);
+            border: 2px solid rgba(0, 212, 255, 0.3);
+            border-radius: 15px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #00ff88, #00d4ff);
+            border-radius: 13px;
+            transition: width 0.4s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #000;
+            font-weight: bold;
+            font-size: 0.9em;
+        }
+
+        .progress-fill.warning {
+            background: linear-gradient(90deg, #ffb400, #ff8c00);
+        }
+
+        .progress-fill.danger {
+            background: linear-gradient(90deg, #ff4757, #ff6b7a);
+        }
+
+        /* Status Box */
+        .status-box {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .status-item {
+            background: rgba(0, 255, 136, 0.05);
+            border: 2px solid var(--success);
+            border-radius: 10px;
+            padding: 15px;
+            text-align: center;
+        }
+
+        .status-item.warning {
+            background: rgba(255, 180, 0, 0.05);
+            border-color: var(--warning);
+        }
+
+        .status-item.danger {
+            background: rgba(255, 71, 87, 0.05);
+            border-color: var(--danger);
+        }
+
+        .status-title {
+            color: #b0b0b0;
+            font-size: 0.85em;
+            margin-bottom: 8px;
+        }
+
+        .status-value {
+            font-size: 1.5em;
+            color: var(--success);
+            font-weight: bold;
+        }
+
+        .status-item.warning .status-value {
+            color: var(--warning);
+        }
+
+        .status-item.danger .status-value {
+            color: var(--danger);
+        }
+
+        /* Chart Container */
+        .chart-container {
+            background: rgba(0, 212, 255, 0.03);
+            border: 1px solid rgba(0, 212, 255, 0.2);
+            border-radius: 15px;
+            padding: 25px;
+            margin-top: 25px;
+            text-align: center;
+        }
+
+        .chart-title {
+            color: var(--accent);
+            font-weight: bold;
+            margin-bottom: 20px;
+            font-size: 1.1em;
+        }
+
+        .pie-chart {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 20px 0;
+        }
+
+        svg {
+            width: 250px;
+            height: 250px;
+        }
+
+        .chart-legend {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+            margin-top: 20px;
+            font-size: 0.9em;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: #b0b0b0;
+        }
+
+        .legend-color {
+            width: 16px;
+            height: 16px;
+            border-radius: 3px;
+        }
+
+        /* Recommendation Box */
+        .recommendation-box {
+            background: rgba(0, 255, 136, 0.05);
+            border: 2px solid var(--success);
+            border-radius: 10px;
+            padding: 20px;
+            margin-top: 20px;
+            line-height: 1.8;
+            color: #d0d0d0;
+        }
+
+        .recommendation-box.warning {
+            background: rgba(255, 180, 0, 0.05);
+            border-color: var(--warning);
+        }
+
+        .recommendation-box.danger {
+            background: rgba(255, 71, 87, 0.05);
+            border-color: var(--danger);
+        }
+
+        .recommendation-title {
+            color: var(--success);
+            font-weight: bold;
+            margin-bottom: 10px;
+            font-size: 1.05em;
+        }
+
+        .recommendation-box.warning .recommendation-title {
+            color: var(--warning);
+        }
+
+        .recommendation-box.danger .recommendation-title {
+            color: var(--danger);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <h1>💰 JOGJA BUDGET PLANNER</h1>
+            <p class="tagline">Mulai dari 16 Desember - Perencanaan Keuangan Cerdas</p>
+        </div>
+
+        <!-- Philosophy Section -->
+        <div class="philosophy">
+            <div class="philosophy-text">
+                "💡 INVESTASI PENDIDIKAN LEBIH DIUTAMAKAN DARIPADA BUSINESS"
+            </div>
+            <button class="why-button" onclick="toggleReason()">❓ Kok Bisa?</button>
+            <div class="reason-box" id="reasonBox">
+                <h3 style="color: var(--success); margin-bottom: 15px;">🎓 Mengapa Pendidikan Lebih Diutamakan?</h3>
+                <div style="line-height: 1.8; color: #d0d0d0;">
+                    <p style="margin-bottom: 10px;">✅ <strong>Pendidikan adalah aset seumur hidup</strong> - Skill dan pengetahuan tidak bisa diambil siapa pun, bahkan dalam kondisi sulit sekalipun.</p>
+                    <p style="margin-bottom: 10px;">✅ <strong>ROI Pendidikan sangat tinggi</strong> - Investasi Rp 1 juta dalam pendidikan bisa menghasilkan jutaan rupiah selama karir Anda (20-40 tahun).</p>
+                    <p style="margin-bottom: 10px;">✅ <strong>Business bisa gagal, tapi pendidikan tetap membuka peluang</strong> - Dengan skill yang baik, Anda bisa membuat business baru kapan saja.</p>
+                    <p style="margin-bottom: 10px;">✅ <strong>Kesempatan emas saat mahasiswa</strong> - Biaya pendidikan lebih murah, waktu luang lebih banyak, dan jaringan lebih mudah dibangun.</p>
+                    <p>✅ <strong>Pendidikan adalah fondasi kesuksesan bisnis masa depan</strong> - Entrepreneur sukses rata-rata sangat fokus pada learning dan development.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Calculator Section -->
+        <div class="main-grid">
+            <!-- Fixed Expenses (Non-Editable) -->
+            <div class="card">
+                <h2>📋 Biaya Hidup Tetap (Terhitung Otomatis)</h2>
+                
+                <div class="locked-info">
+                    ℹ️ Biaya ini dihitung otomatis mulai tanggal 16 Desember. Semua komponen sudah ditentukan untuk akurasi.
+                </div>
+
+                <div style="background: rgba(0, 212, 255, 0.05); border-left: 4px solid var(--accent); padding: 15px; border-radius: 8px; margin-bottom: 15px;">
+                    <div style="color: var(--accent); font-weight: bold; margin-bottom: 10px;">🍳 PENGELUARAN MAKANAN & IURAN</div>
+                    <div style="font-size: 0.9em; color: #d0d0d0; line-height: 1.6;">
+                        <div>• Lauk sehari: Rp 8.000/kali</div>
+                        <div>• Iuran per makan: Rp 3.500 (100g per orang)</div>
+                        <div>• Iuran mingguan: Rp 35.000</div>
+                        <div>• Beras per minggu (6 orang): 12,6 kg</div>
+                        <div>• Listrik + WiFi + Sampah + Air: Rp 30.000/bulan</div>
+                    </div>
+                </div>
+
+                <button class="btn btn-primary" onclick="hitungBiayaTetap()">Hitung Biaya Tetap</button>
+            </div>
+
+            <!-- Variable Expenses (Editable) -->
+            <div class="card">
+                <h2>🛒 Biaya Tambahan (Bisa Dirubah)</h2>
+                
+                <div class="locked-info">
+                    📝 Input pengeluaran variabel Anda sendiri, seperti jajan, kopi, atau keperluan lainnya.
+                </div>
+
+                <div class="input-group">
+                    <label>Jajan Kantin per Hari</label>
+                    <input type="number" id="jajanKantin" value="10000" step="1000">
+                    <small style="color: #888;">Estimasi: Rp 10.000</small>
+                </div>
+
+                <div class="input-group">
+                    <label>Kopi & Minuman per Minggu</label>
+                    <input type="number" id="kopiMinuman" value="20000" step="1000">
+                    <small style="color: #888;">Estimasi: Rp 20.000</small>
+                </div>
+
+                <div class="input-group">
+                    <label>Transportasi & Lain-Lain per Bulan</label>
+                    <input type="number" id="transportasi" value="100000" step="1000">
+                    <small style="color: #888;">Estimasi: Rp 100.000</small>
+                </div>
+
+                <button class="btn btn-primary" onclick="hitungBiayaVariabel()">Hitung Biaya Tambahan</button>
+            </div>
+        </div>
+
+        <!-- Fixed Expenses Results -->
+        <div class="card" style="margin-top: 30px;">
+            <h2>📊 Rincian Biaya Tetap (Per Minggu & Per Bulan)</h2>
+            
+            <div id="hasilBiayaTetap" style="display: none;">
+                <div class="result-box">
+                    <div class="result-row">
+                        <span class="result-label">Lauk Sehari (Per Minggu)</span>
+                        <span class="result-value" id="laukMingguan">Rp 0</span>
+                    </div>
+                    <div class="result-row">
+                        <span class="result-label">Iuran Makanan (Per Minggu)</span>
+                        <span class="result-value" id="iuranMingguan">Rp 0</span>
+                    </div>
+                    <div class="result-row">
+                        <span class="result-label">Total Makanan (Per Minggu)</span>
+                        <span class="result-value" id="totalMakanMingguan">Rp 0</span>
+                    </div>
+                    <div class="result-row" style="border-bottom: 2px solid var(--success); padding: 15px 0 10px 0; font-weight: bold;">
+                        <span class="result-label">⚡ Utilitas (Per Bulan)</span>
+                        <span class="result-value" id="utilitasBulanan">Rp 30.000</span>
+                    </div>
+                </div>
+
+                <div class="total-result">
+                    <div style="color: #b0b0b0;">Total Biaya Tetap</div>
+                    <div class="total-price" id="totalTetapMingguan">Rp 0</div>
+                    <small style="color: var(--accent);">Per Minggu</small>
+                    <div class="total-price" style="font-size: 1.5em; margin-top: 10px;" id="totalTetapBulanan">Rp 0</div>
+                    <small style="color: var(--accent);">Per Bulan</small>
+                </div>
+            </div>
+        </div>
+
+        <!-- Variable Expenses Results -->
+        <div class="card" style="margin-top: 30px;">
+            <h2>💳 Rincian Biaya Tambahan</h2>
+            
+            <div id="hasilBiayaVariabel" style="display: none;">
+                <div class="result-box">
+                    <div class="result-row">
+                        <span class="result-label">Jajan Kantin (Per Hari)</span>
+                        <span class="result-value" id="jajanPerHari">Rp 0</span>
+                    </div>
+                    <div class="result-row">
+                        <span class="result-label">Jajan Kantin (Per Bulan)</span>
+                        <span class="result-value" id="jajanPerBulan">Rp 0</span>
+                    </div>
+                    <div class="result-row">
+                        <span class="result-label">Kopi & Minuman (Per Minggu)</span>
+                        <span class="result-value" id="kopiPerMinggu">Rp 0</span>
+                    </div>
+                    <div class="result-row">
+                        <span class="result-label">Kopi & Minuman (Per Bulan)</span>
+                        <span class="result-value" id="kopiPerBulan">Rp 0</span>
+                    </div>
+                    <div class="result-row" style="border-bottom: 2px solid var(--success); padding: 15px 0 10px 0; font-weight: bold;">
+                        <span class="result-label">Transportasi & Lain-Lain (Per Bulan)</span>
+                        <span class="result-value" id="transportasiPerBulan">Rp 0</span>
+                    </div>
+                </div>
+
+                <div class="total-result">
+                    <div style="color: #b0b0b0;">Total Biaya Tambahan</div>
+                    <div class="total-price" id="totalVariabelMingguan">Rp 0</div>
+                    <small style="color: var(--accent);">Per Minggu</small>
+                    <div class="total-price" style="font-size: 1.5em; margin-top: 10px;" id="totalVariabelBulanan">Rp 0</div>
+                    <small style="color: var(--accent);">Per Bulan</small>
+                </div>
+            </div>
+        </div>
+
+        <!-- Total Summary -->
+        <div class="section-title">💰 RINGKASAN TOTAL PENGELUARAN</div>
+        <div class="summary-grid" id="summaryContainer" style="display: none;">
+            <div class="summary-card">
+                <div class="summary-label">📅 Per Minggu</div>
+                <div class="summary-value" id="totalPerMinggu">Rp 0</div>
+            </div>
+            <div class="summary-card">
+                <div class="summary-label">📆 Per Bulan</div>
+                <div class="summary-value" id="totalPerBulan">Rp 0</div>
+            </div>
+            <div class="summary-card">
+                <div class="summary-label">🎓 UKT per Bulan</div>
+                <div class="summary-value" id="uktBulanan">Rp 1.000.000</div>
+            </div>
+            <div class="summary-card">
+                <div class="summary-label">🎯 Total Bulanan</div>
+                <div class="summary-value" id="totalSemua">Rp 0</div>
+            </div>
+        </div>
+
+        <!-- Budget Sufficiency Checker -->
+        <div class="sufficiency-card">
+            <h2>💸 CEK KECUKUPAN DANA DARI ORANG TUA</h2>
+            
+            <div class="locked-info">
+                📝 Masukkan dana yang diberikan orang tua untuk kebutuhan hidup sehari-hari (tanpa UKT dan kontrak). Sistem akan menghitung persentase kecukupannya.
+            </div>
+
+            <div class="period-selector">
+                <button class="period-btn active" onclick="gantiPeriode('minggu')">📅 Per Minggu</button>
+                <button class="period-btn" onclick="gantiPeriode('bulan')">📆 Per Bulan</button>
+            </div>
+
+            <div class="budget-input-group">
+                <div class="input-group">
+                    <label id="danaLabel">Dana dari Orang Tua (Per Minggu)</label>
+                    <input type="number" id="danaOrangTua" value="0" step="10000">
+                    <small style="color: #888;" id="danaKeterangan">Contoh: 400.000 per minggu</small>
+                </div>
+                <div class="input-group">
+                    <label>Kebutuhan Hidup (Otomatis Terhitung)</label>
+                    <input type="number" id="kebutuhanHidup" value="0" step="1000" readonly style="background: rgba(100, 100, 100, 0.1); color: #a0a0a0;">
+                    <small style="color: #888;">Tidak termasuk UKT & Kontrak</small>
+                </div>
+            </div>
+
+            <button class="btn btn-primary" onclick="hitungPersentaseKecukupan()">Hitung Kecukupan Dana</button>
+
+            <!-- Progress Bar & Status -->
+            <div id="hasilKecukupan" style="display: none;">
+                <div class="progress-container">
+                    <div class="progress-label">
+                        <span>Persentase Kecukupan</span>
+                        <span id="persentaseText">0%</span>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="progressFill" style="width: 0%;">0%</div>
+                    </div>
+                </div>
+
+                <div class="status-box">
+                    <div class="status-item">
+                        <div class="status-title">💰 Dana Diterima</div>
+                        <div class="status-value" id="statusDanaMain">Rp 0</div>
+                    </div>
+                    <div class="status-item">
+                        <div class="status-title">📊 Kebutuhan</div>
+                        <div class="status-value" id="statusKebutuhan">Rp 0</div>
+                    </div>
+                    <div class="status-item">
+                        <div class="status-title">✅ Sisa/Kekurangan</div>
+                        <div class="status-value" id="statusSisa">Rp 0</div>
+                    </div>
+                    <div class="status-item">
+                        <div class="status-title">📈 Status Kecukupan</div>
+                        <div class="status-value" id="statusKecukupan">-</div>
+                    </div>
+                </div>
+
+                <!-- Pie Chart -->
+                <div class="chart-container">
+                    <div class="chart-title">📊 Visualisasi Alokasi Dana</div>
+                    <div class="pie-chart">
+                        <svg id="pieChart" viewBox="0 0 100 100"></svg>
+                    </div>
+                    <div class="chart-legend">
+                        <div class="legend-item">
+                            <div class="legend-color" style="background: #00ff88;"></div>
+                            <span>Kebutuhan Hidup</span>
+                        </div>
+                        <div class="legend-item">
+                            <div class="legend-color" style="background: #00d4ff;"></div>
+                            <span>Sisa (Tabungan/Cadangan)</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Recommendation -->
+                <div id="recommendationBox" class="recommendation-box">
+                    <div class="recommendation-title">💡 Rekomendasi Keuangan</div>
+                    <div id="recommendationText">-</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const UKT_BULANAN = 1000000;
+        const UTILITAS_BULANAN = 30000;
+        const LAUK_HARIAN = 8000;
+        const IURAN_MINGGUAN = 35000;
+        let currentPeriode = 'minggu';
+
+        function formatRupiah(num) {
+            return 'Rp ' + Math.round(num).toLocaleString('id-ID');
+        }
+
+        function toggleReason() {
+            const reasonBox = document.getElementById('reasonBox');
+            reasonBox.style.display = reasonBox.style.display === 'none' ? 'block' : 'none';
+        }
+
+        function hitungBiayaTetap() {
+            // Per minggu
+            const laukMingguan = LAUK_HARIAN * 7;
+            const iuranMingguan = IURAN_MINGGUAN;
+            const totalMakanMingguan = laukMingguan + iuranMingguan;
+            
+            // Per bulan (rata-rata 4.3 minggu)
+            const totalMakanBulanan = totalMakanMingguan * 4.3;
+            const totalTetapBulanan = totalMakanBulanan + UTILITAS_BULANAN;
+
+            // Display
+            document.getElementById('laukMingguan').textContent = formatRupiah(laukMingguan);
+            document.getElementById('iuranMingguan').textContent = formatRupiah(iuranMingguan);
+            document.getElementById('totalMakanMingguan').textContent = formatRupiah(totalMakanMingguan);
+            document.getElementById('utilitasBulanan').textContent = formatRupiah(UTILITAS_BULANAN);
+            document.getElementById('totalTetapMingguan').textContent = formatRupiah(totalMakanMingguan);
+            document.getElementById('totalTetapBulanan').textContent = formatRupiah(totalTetapBulanan);
+            document.getElementById('hasilBiayaTetap').style.display = 'block';
+
+            return { totalMakanMingguan, totalMakanBulanan, totalTetapBulanan };
+        }
+
+        function hitungBiayaVariabel() {
+            const jajanKantin = parseFloat(document.getElementById('jajanKantin').value) || 10000;
+            const kopiMinuman = parseFloat(document.getElementById('kopiMinuman').value) || 20000;
+            const transportasi = parseFloat(document.getElementById('transportasi').value) || 100000;
+
+            // Per hari & minggu
+            const jajanPerHari = jajanKantin;
+            const jajanPerBulan = jajanPerHari * 30;
+            const kopiPerMinggu = kopiMinuman;
+            const kopiPerBulan = kopiPerMinggu * 4.3;
+
+            // Total per minggu & bulan
+            const totalVariabelMingguan = (jajanPerHari * 7) + kopiPerMinggu;
+            const totalVariabelBulanan = jajanPerBulan + kopiPerBulan + transportasi;
+
+            // Display
+            document.getElementById('jajanPerHari').textContent = formatRupiah(jajanPerHari);
+            document.getElementById('jajanPerBulan').textContent = formatRupiah(jajanPerBulan);
+            document.getElementById('kopiPerMinggu').textContent = formatRupiah(kopiPerMinggu);
+            document.getElementById('kopiPerBulan').textContent = formatRupiah(kopiPerBulan);
+            document.getElementById('transportasiPerBulan').textContent = formatRupiah(transportasi);
+            document.getElementById('totalVariabelMingguan').textContent = formatRupiah(totalVariabelMingguan);
+            document.getElementById('totalVariabelBulanan').textContent = formatRupiah(totalVariabelBulanan);
+            document.getElementById('hasilBiayaVariabel').style.display = 'block';
+
+            // Calculate totals
+            const tetapData = hitungBiayaTetap();
+            const totalPerMinggu = tetapData.totalMakanMingguan + totalVariabelMingguan;
+            const totalPerBulan = tetapData.totalTetapBulanan + totalVariabelBulanan;
+            const totalSemua = totalPerBulan + UKT_BULANAN;
+
+            document.getElementById('totalPerMinggu').textContent = formatRupiah(totalPerMinggu);
+            document.getElementById('totalPerBulan').textContent = formatRupiah(totalPerBulan);
+            document.getElementById('totalSemua').textContent = formatRupiah(totalSemua);
+            document.getElementById('summaryContainer').style.display = 'grid';
+
+            // Update budget sufficiency input
+            updateKebutuhanHidup();
+        }
+
+        function gantiPeriode(periode) {
+            currentPeriode = periode;
+            document.querySelectorAll('.period-btn').forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+
+            const danaLabel = document.getElementById('danaLabel');
+            const danaKeterangan = document.getElementById('danaKeterangan');
+
+            if (periode === 'minggu') {
+                danaLabel.textContent = 'Dana dari Orang Tua (Per Minggu)';
+                danaKeterangan.textContent = 'Contoh: 400.000 per minggu';
+            } else {
+                danaLabel.textContent = 'Dana dari Orang Tua (Per Bulan)';
+                danaKeterangan.textContent = 'Contoh: 1.500.000 per bulan';
+            }
+
+            document.getElementById('danaOrangTua').value = 0;
+            updateKebutuhanHidup();
+        }
+
+        function updateKebutuhanHidup() {
+            const tetapData = hitungBiayaTetap();
+            const jajanKantin = parseFloat(document.getElementById('jajanKantin').value) || 10000;
+            const kopiMinuman = parseFloat(document.getElementById('kopiMinuman').value) || 20000;
+            const transportasi = parseFloat(document.getElementById('transportasi').value) || 100000;
+
+            let kebutuhan;
+            if (currentPeriode === 'minggu') {
+                const jajanPerMinggu = jajanKantin * 7;
+                kebutuhan = tetapData.totalMakanMingguan + jajanPerMinggu + kopiMinuman;
+            } else {
+                const jajanPerBulan = jajanKantin * 30;
+                const kopiPerBulan = kopiMinuman * 4.3;
+                kebutuhan = tetapData.totalTetapBulanan + jajanPerBulan + kopiPerBulan + transportasi;
+            }
+
+            document.getElementById('kebutuhanHidup').value = Math.round(kebutuhan);
+        }
+
+        function hitungPersentaseKecukupan() {
+            const danaOrangTua = parseFloat(document.getElementById('danaOrangTua').value) || 0;
+            const kebutuhanHidup = parseFloat(document.getElementById('kebutuhanHidup').value) || 0;
+
+            if (danaOrangTua <= 0) {
+                alert('Masukkan jumlah dana dari orang tua!');
+                return;
+            }
+
+            const persentase = (danaOrangTua / kebutuhanHidup) * 100;
+            const sisa = danaOrangTua - kebutuhanHidup;
+            let status = '';
+            let statusClass = '';
+            let recommendations = '';
+
+            if (persentase >= 100) {
+                status = '✅ CUKUP';
+                statusClass = 'success';
+                recommendations = `
+                    <p>🎉 Dana Anda sangat mencukupi untuk kebutuhan hidup sehari-hari!</p>
+                    <p>💰 <strong>Sisa Dana: ${formatRupiah(sisa)} per ${currentPeriode}</strong></p>
+                    <p style="margin-top: 10px;">💡 Rekomendasi:</p>
+                    <ul style="margin-left: 20px;">
+                        <li>Simpan minimal 30-40% dari sisa dana untuk tabungan/investasi pendidikan</li>
+                        <li>Gunakan sisanya untuk emergency fund atau kebutuhan mendadak</li>
+                        <li>Pertimbangkan untuk membeli buku, kursus, atau mengikuti seminar untuk pengembangan skill</li>
+                    </ul>
+                `;
+            } else if (persentase >= 80) {
+                status = '⚠️ CUKUP KETAT';
+                statusClass = 'warning';
+                recommendations = `
+                    <p>🤔 Dana Anda cukup untuk kebutuhan hidup, tapi dengan margin yang cukup tipis.</p>
+                    <p>💸 <strong>Kekurangan: ${formatRupiah(Math.abs(sisa))} per ${currentPeriode}</strong></p>
+                    <p style="margin-top: 10px;">💡 Rekomendasi:</p>
+                    <ul style="margin-left: 20px;">
+                        <li>Kurangi pengeluaran variabel (jajan, kopi, transportasi) untuk menciptakan buffer</li>
+                        <li>Hemat Rp 10.000-20.000 per minggu untuk emergency fund</li>
+                        <li>Tanyakan kepada orang tua apakah bisa menambah dana slightly</li>
+                        <li>Cari peluang part-time job atau freelance yang tidak mengganggu kuliah</li>
+                    </ul>
+                `;
+            } else {
+                status = '❌ KURANG';
+                statusClass = 'danger';
+                recommendations = `
+                    <p>⚠️ Dana Anda tidak mencukupi untuk kebutuhan hidup sehari-hari.</p>
+                    <p>💸 <strong>Kekurangan: ${formatRupiah(Math.abs(sisa))} per ${currentPeriode}</strong></p>
+                    <p style="margin-top: 10px;">💡 Rekomendasi URGENT:</p>
+                    <ul style="margin-left: 20px;">
+                        <li>🔴 Komunikasikan dengan orang tua tentang kekurangan dana ini</li>
+                        <li>Potong pengeluaran variabel sejauh mungkin (jajan Rp 5.000, kopi Rp 10.000)</li>
+                        <li>Cari sumber pendapatan tambahan: tutor, freelance design, content creation</li>
+                        <li>Hubungi PLAI untuk bantuan dana darurat jika diperlukan</li>
+                        <li>Optimalkan penggunaan fasilitas asrama/kontrakan yang sudah dibayar</li>
+                    </ul>
+                `;
+            }
+
+            // Update display
+            document.getElementById('persentaseText').textContent = Math.round(persentase) + '%';
+            
+            const progressFill = document.getElementById('progressFill');
+            progressFill.style.width = Math.min(persentase, 100) + '%';
+            progressFill.textContent = Math.round(persentase) + '%';
+            progressFill.classList.remove('warning', 'danger');
+            
+            if (persentase >= 100) {
+                progressFill.classList.add('success');
+            } else if (persentase >= 80) {
+                progressFill.classList.add('warning');
+            } else {
+                progressFill.classList.add('danger');
+            }
+
+            document.getElementById('statusDanaMain').textContent = formatRupiah(danaOrangTua);
+            document.getElementById('statusKebutuhan').textContent = formatRupiah(kebutuhanHidup);
+            document.getElementById('statusSisa').textContent = formatRupiah(sisa);
+            document.getElementById('statusKecukupan').textContent = status;
+            
+            // Update status box styling
+            const sisaBox = document.querySelectorAll('.status-item')[2];
+            const kecukaupanBox = document.querySelectorAll('.status-item')[3];
+            sisaBox.className = 'status-item ' + (sisa >= 0 ? 'success' : 'danger');
+            kecukaupanBox.className = 'status-item ' + statusClass;
+
+            // Draw pie chart
+            drawPieChart(danaOrangTua, kebutuhanHidup, sisa);
+
+            // Update recommendation
+            const recBox = document.getElementById('recommendationBox');
+            recBox.className = 'recommendation-box ' + statusClass;
+            document.getElementById('recommendationText').innerHTML = recommendations;
+
+            document.getElementById('hasilKecukupan').style.display = 'block';
+        }
+
+        function drawPieChart(dana, kebutuhan, sisa) {
+            const svg = document.getElementById('pieChart');
+            svg.innerHTML = '';
+
+            const radius = 45;
+            const cx = 50;
+            const cy = 50;
+
+            // Calculate angles
+            const kebutuhanAngle = (kebutuhan / dana) * 360;
+            const sisaAngle = (Math.max(sisa, 0) / dana) * 360;
+
+            // Draw kebutuhan slice
+            const path1 = createSlice(cx, cy, radius, 0, kebutuhanAngle);
+            const pathEl1 = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+            pathEl1.setAttribute('d', path1);
+            pathEl1.setAttribute('fill', '#00ff88');
+            pathEl1.setAttribute('stroke', '#0f0f1e');
+            pathEl1.setAttribute('stroke-width', '2');
+            svg.appendChild(pathEl1);
+
+            // Draw sisa slice
+            if (sisa > 0) {
+                const path2 = createSlice(cx, cy, radius, kebutuhanAngle, kebutuhanAngle + sisaAngle);
+                const pathEl2 = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+                pathEl2.setAttribute('d', path2);
+                pathEl2.setAttribute('fill', '#00d4ff');
+                pathEl2.setAttribute('stroke', '#0f0f1e');
+                pathEl2.setAttribute('stroke-width', '2');
+                svg.appendChild(pathEl2);
+            } else {
+                const path2 = createSlice(cx, cy, radius, kebutuhanAngle, 360);
+                const pathEl2 = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+                pathEl2.setAttribute('d', path2);
+                pathEl2.setAttribute('fill', '#ff4757');
+                pathEl2.setAttribute('stroke', '#0f0f1e');
+                pathEl2.setAttribute('stroke-width', '2');
+                svg.appendChild(pathEl2);
+            }
+        }
+
+        function createSlice(cx, cy, radius, startAngle, endAngle) {
+            const start = polarToCartesian(cx, cy, radius, endAngle);
+            const end = polarToCartesian(cx, cy, radius, startAngle);
+            const largeArc = endAngle - startAngle > 180 ? 1 : 0;
+
+            return [
+                'M', cx, cy,
+                'L', start.x, start.y,
+                'A', radius, radius, 0, largeArc, 0, end.x, end.y,
+                'Z'
+            ].join(' ');
+        }
+
+        function polarToCartesian(centerX, centerY, radius, angleInDegrees) {
+            const angleInRadians = (angleInDegrees - 90) * Math.PI / 180.0;
+            return {
+                x: centerX + (radius * Math.cos(angleInRadians)),
+                y: centerY + (radius * Math.sin(angleInRadians))
+            };
+        }
+
+        // Initial calculation
+        window.addEventListener('DOMContentLoaded', function() {
+            hitungBiayaTetap();
+            updateKebutuhanHidup();
+        });
+
+        // Update kebutuhan when inputs change
+        document.addEventListener('input', function(e) {
+            if (['jajanKantin', 'kopiMinuman', 'transportasi'].includes(e.target.id)) {
+                updateKebutuhanHidup();
+            }
+        });
+    </script>
+</body>
+</html>
